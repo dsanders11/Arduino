@@ -119,6 +119,7 @@ public class Preferences extends javax.swing.JDialog {
     verboseUploadBox = new javax.swing.JCheckBox();
     comboWarningsLabel = new javax.swing.JLabel();
     comboWarnings = new JComboBox(warningItems);
+    warningsAsErrorsBox = new javax.swing.JCheckBox();
     additionalBoardsManagerLabel = new javax.swing.JLabel();
     additionalBoardsManagerField = new javax.swing.JTextField();
     extendedAdditionalUrlFieldWindow = new javax.swing.JButton();
@@ -199,6 +200,8 @@ public class Preferences extends javax.swing.JDialog {
     verboseUploadBox.setText(tr("upload"));
 
     comboWarningsLabel.setText(tr("Compiler warnings: "));
+
+    warningsAsErrorsBox.setText(tr("treat warnings as errors"));
 
     additionalBoardsManagerLabel.setText(tr("Additional Boards Manager URLs: "));
     additionalBoardsManagerLabel.setToolTipText(tr("Enter a comma separated list of urls"));
@@ -319,7 +322,8 @@ public class Preferences extends javax.swing.JDialog {
                     .addGap(0, 0, 0)
                     .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel2))))
+                    .addComponent(jLabel2)))
+                  .addComponent(warningsAsErrorsBox))
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(showVerboseLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -386,7 +390,8 @@ public class Preferences extends javax.swing.JDialog {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(comboWarningsLabel)
-          .addComponent(comboWarnings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(comboWarnings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(warningsAsErrorsBox))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(checkboxesContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -693,6 +698,7 @@ public class Preferences extends javax.swing.JDialog {
   private javax.swing.JLabel comboLanguageLabel;
   private javax.swing.JComboBox comboWarnings;
   private javax.swing.JLabel comboWarningsLabel;
+  private javax.swing.JCheckBox warningsAsErrorsBox;
   private javax.swing.JCheckBox displayLineNumbersBox;
   private javax.swing.JCheckBox enableCodeFoldingBox;
   private javax.swing.JButton extendedAdditionalUrlFieldWindow;
@@ -782,6 +788,8 @@ public class Preferences extends javax.swing.JDialog {
     WarningItem warningItem = (WarningItem) comboWarnings.getSelectedItem();
     PreferencesData.set("compiler.warning_level", warningItem.getValue());
 
+    PreferencesData.setBoolean("compiler.warnings_as_errors", warningsAsErrorsBox.isSelected());
+
     PreferencesData.setBoolean("editor.linenumbers", displayLineNumbersBox.isSelected());
 
     PreferencesData.setBoolean("editor.code_folding", enableCodeFoldingBox.isSelected());
@@ -845,6 +853,8 @@ public class Preferences extends javax.swing.JDialog {
         comboWarnings.setSelectedItem(item);
       }
     }
+
+    warningsAsErrorsBox.setSelected(PreferencesData.getBoolean("compiler.warnings_as_errors"));
 
     displayLineNumbersBox.setSelected(PreferencesData.getBoolean("editor.linenumbers"));
 
